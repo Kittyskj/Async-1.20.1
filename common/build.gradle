@@ -11,12 +11,6 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
 minecraft {
     accessTransformer = true
     mappings channel: 'parchment', version: "${parchment_version}-${parchment_minecraft}"
-
-    // Logic for finding the Access Transformer
-    //def at = file('src/main/resources/META-INF/accesstransformer.cfg')
-    //if (at.exists()) {
-    //    setAccessTransformer('../../../../common/src/main/resources/META-INF/accesstransformer.cfg')
-    //}
 }
 
 repositories {
@@ -31,23 +25,21 @@ repositories {
 }
 
 dependencies {
-    // 1. Core Minecraft/Forge
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
 
-    // 2. Mixin Stack (Extras + Squared)
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixinextras_version}"))
     implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:${mixinsquared_version}"))
 
-    // 3. ASM (Required for low-level byte manipulation)
     implementation "org.ow2.asm:asm:9.5"
     implementation "org.ow2.asm:asm-tree:9.5"
 
-    // 4. Utilities (Lombok)
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+    implementation 'com.lmax:disruptor:3.4.4'
+    implementation 'it.unimi.dsi:fastutil:8.5.12'
 }
 
-// Configuration for sharing source/resources with loader-specific projects
 configurations {
     commonJava {
         canBeResolved = false
